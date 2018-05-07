@@ -17,6 +17,15 @@ load(
 # "repositories" function(s).
 container_repositories()
 
+# cc_image
+load(
+    "@io_bazel_rules_docker//cc:image.bzl",
+    _cc_image_repos = "repositories",
+)
+
+_cc_image_repos()
+
+# Pulling image
 container_pull(
     name = "ubuntu16_04",
     digest = "sha256:c81e8f6bcbab8818fdbe2df6d367990ab55d85b4dab300931a53ba5d082f4296",

@@ -14,10 +14,17 @@
 
 package(default_visibility = ["//visibility:public"])
 
+load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
+
 exports_files(glob(["**"]))
 
 cc_binary(
     name = "hello_world",
+    srcs = ["hello_world.cc"],
+)
+
+cc_image(
+    name = "hello_world_image",
     srcs = ["hello_world.cc"],
 )
 
