@@ -30,7 +30,7 @@ container_layer(
 
 container_layer(
     name = "go-src",
-    files = ["//hello_world/go:hello.go"],
+    files = ["//hello_world/golang:hello.go"],
     directory = "/workspace",
 )
 

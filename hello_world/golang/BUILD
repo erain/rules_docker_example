@@ -15,10 +15,16 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 
 exports_files(glob(["**"]))
 
 go_binary(
     name = "hello",
+    srcs = ["hello.go"],
+)
+
+go_image(
+    name = "hello_image",
     srcs = ["hello.go"],
 )
