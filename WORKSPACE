@@ -2,9 +2,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "39d1cee5eda3b968f58b1a956a2fe78cbbd68a0f24cbac64239ef35b99b27e10",
-    strip_prefix = "rules_docker-e4df7a3b11ebfa419a8f8b6392b70b6fe9d49702",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/e4df7a3b11ebfa419a8f8b6392b70b6fe9d49702.tar.gz"],
+    sha256 = "96424f67fbdb44e804c024c489f69980ef91cc1320367c66eafae4c030d75fe0",
+    strip_prefix = "rules_docker-7401cb256222615c497c0dee5a4de5724a4f4cc7",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/7401cb256222615c497c0dee5a4de5724a4f4cc7.tar.gz"],
 )
 
 load(
@@ -25,21 +25,58 @@ container_pull(
     repository = "cloud-marketplace/google/ubuntu16_04",
 )
 
+# Rules Protobuf
+git_repository(
+    name = "org_pubref_rules_protobuf",
+    remote = "https://github.com/pubref/rules_protobuf.git",
+    tag = "v0.8.2",
+)
+
+load("@org_pubref_rules_protobuf//python:rules.bzl", "py_proto_repositories")
+
+py_proto_repositories()
+
+# Rules Python
+git_repository(
+    name = "io_bazel_rules_python",
+    commit = "8b5d0683a7d878b28fffe464779c8a53659fc645",
+    remote = "https://github.com/bazelbuild/rules_python.git",
+)
+
+load("@io_bazel_rules_python//python:pip.bzl", "pip_import", "pip_repositories")
+
+pip_repositories()
+
+# Import for py grpc examples
+pip_import(
+    name = "examples_grpc",
+    requirements = "//hello_grpc/py:requirements.txt",
+)
+
+load(
+    "@examples_grpc//:requirements.bzl",
+    _grpc_install = "pip_install",
+)
+
+_grpc_install()
+
 # Rules Go
 http_archive(
     name = "io_bazel_rules_go",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.11.1/rules_go-0.11.1.tar.gz"],
     sha256 = "1868ff68d6079e31b2f09b828b58d62e57ca8e9636edff699247c9108518570b",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.11.1/rules_go-0.11.1.tar.gz"],
 )
+
 http_archive(
     name = "bazel_gazelle",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.11.0/bazel-gazelle-0.11.0.tar.gz"],
     sha256 = "92a3c59734dad2ef85dc731dbcb2bc23c4568cded79d4b87ebccd787eb89e8d0",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.11.0/bazel-gazelle-0.11.0.tar.gz"],
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
+
 go_register_toolchains()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
