@@ -8,37 +8,28 @@ load(
 
 container_image(
     name = "helloworld",
-    base = "@ubuntu16_04//image",
+    base = "@ubuntu1604//image",
     entrypoint = "echo 'hello world!'",
 )
 
 container_image(
-    name = "go-ubuntu",
-    base = ":helloworld",
-    layers = [":go-toolchain", ":go-src"],
-    entrypoint = "/bin/bash",
+    name = "go-helloworld",
+    base = "@go-alpine//image",
+    layers = [":src"],
+    entrypoint = "go run /workspace/hello.go",
 )
 
 container_layer(
-    name = "go-toolchain",
-    env = {
-        "GOPATH": "/go",
-        "PATH": "$PATH:/usr/local/go/bin",
-    },
-    tars = ["//third_party/golang:tar"],
-)
-
-container_layer(
-    name = "go-src",
+    name = "src",
     files = ["//hello_world/golang:hello.go"],
     directory = "/workspace",
 )
 
 container_push(
-    name = "go-ubuntu-gcr",
-    image = ":go-ubuntu",
+    name = "go-helloworld-gcr",
+    image = ":go-helloworld",
     format = "Docker",
     registry = "gcr.io",
-    repository = "yiyu-testing/go-ubuntu",
+    repository = "yiyu-gke-dev/go-helloworld",
     tag = "test",
 )
