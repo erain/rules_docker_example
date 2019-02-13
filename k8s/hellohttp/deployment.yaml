@@ -15,3 +15,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+
+# And you can expose this deployment by
+#   kubectl expose deployment hello-http-dev --type=LoadBalancer --name=hello-http-svc
