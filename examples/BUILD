@@ -22,7 +22,7 @@ container_image(
 container_layer(
     name = "src",
     directory = "/workspace",
-    files = ["//hello_world/golang:hello.go"],
+    files = ["//lang_images/golang:hello.go"],
 )
 
 container_push(

@@ -1,11 +1,10 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Download the rules_docker repository at release v0.7.0
-http_archive(
+git_repository(
     name = "io_bazel_rules_docker",
-    sha256 = "aed1c249d4ec8f703edddf35cbe9dfaca0b5f5ea6e4cd9e83e99f3b0d1136c3d",
-    strip_prefix = "rules_docker-0.7.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.7.0.tar.gz"],
+    commit = "67d567bcfe5920acfaec270c41aa3e5f3262ca42",
+    remote = "https://github.com/bazelbuild/rules_docker.git",
 )
 
 load(
@@ -64,3 +63,13 @@ load(
 )
 
 _go_image_repos()
+
+git_repository(
+    name = "io_bazel_rules_k8s",
+    commit = "47af463e41f7c206a1494721b973e24393831d9d",
+    remote = "https://github.com/bazelbuild/rules_k8s.git",
+)
+
+load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
+
+k8s_repositories()
