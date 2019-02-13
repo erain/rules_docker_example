@@ -12,6 +12,7 @@ load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
 )
+
 container_repositories()
 
 load(
@@ -22,14 +23,14 @@ load(
 # Pulling image
 container_pull(
     name = "ubuntu1604",
+    digest = "sha256:e4a134999bea4abb4a27bc437e6118fdddfb172e1b9d683129b74d254af51675",
     registry = "index.docker.io",
     repository = "library/ubuntu",
-    digest = "sha256:e4a134999bea4abb4a27bc437e6118fdddfb172e1b9d683129b74d254af51675",
 )
 
 # Pulling image
 container_pull(
-    name = "go-alpine",
+    name = "go_alpine",
     registry = "index.docker.io",
     repository = "library/golang",
     tag = "alpine",
@@ -42,7 +43,6 @@ load(
 )
 
 _cc_image_repos()
-
 
 # For our go_image test.
 http_archive(

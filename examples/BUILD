@@ -13,22 +13,22 @@ container_image(
 )
 
 container_image(
-    name = "go-helloworld",
-    base = "@go-alpine//image",
-    layers = [":src"],
+    name = "go_helloworld",
+    base = "@go_alpine//image",
     entrypoint = "go run /workspace/hello.go",
+    layers = [":src"],
 )
 
 container_layer(
     name = "src",
-    files = ["//hello_world/golang:hello.go"],
     directory = "/workspace",
+    files = ["//hello_world/golang:hello.go"],
 )
 
 container_push(
-    name = "go-helloworld-gcr",
-    image = ":go-helloworld",
+    name = "go_helloworld_gcr",
     format = "Docker",
+    image = ":go_helloworld",
     registry = "gcr.io",
     repository = "yiyu-gke-dev/go-helloworld",
     tag = "test",

@@ -20,11 +20,11 @@ load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 exports_files(glob(["**"]))
 
 go_binary(
-    name = "hello",
+    name = "hello_world",
     srcs = ["hello.go"],
 )
 
 go_image(
-    name = "hello_image",
+    name = "hello_world_image",
     srcs = ["hello.go"],
 )
