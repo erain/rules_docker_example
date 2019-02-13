@@ -64,6 +64,7 @@ load(
 
 _go_image_repos()
 
+# rules_k8s
 git_repository(
     name = "io_bazel_rules_k8s",
     commit = "47af463e41f7c206a1494721b973e24393831d9d",
@@ -73,3 +74,16 @@ git_repository(
 load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
 
 k8s_repositories()
+
+load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_defaults")
+
+k8s_defaults(
+    # This becomes the name of the @repository and the rule
+    # you will import in your BUILD files.
+    name = "k8s_deploy",
+    # This is the name of the cluster as it appears in:
+    #   kubectl config view --minify -o=jsonpath='{.contexts[0].context.cluster}'
+    cluster = "gke_yiyu-gke-dev_us-central1-c_brownbag",
+    image_chroot = "gcr.io/yiyu-gke-dev/rules-k8s",
+    kind = "deployment",
+)
